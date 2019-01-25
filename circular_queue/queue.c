@@ -1,7 +1,7 @@
 #include "queue.h"
   
 /* Creating a brand new queue as per your requirements in capacity*/
-queue_t *create_queue(int capacity) {   //nefunguje presne, kdyz seg. fault
+queue_t *create_queue(int capacity) {   
   queue_t* queue = (queue_t*)malloc(sizeof(queue_t));
   queue->my_data = (int**)malloc(capacity*sizeof(int*));
   queue->size = capacity;
@@ -9,11 +9,11 @@ queue_t *create_queue(int capacity) {   //nefunguje presne, kdyz seg. fault
   queue->tail = 0;
   queue->counter = 0;
   
-  return queue;     //kontrola: udelat to na null a pak zkontrolovat; tato fce navraci ukazatel na strukturu
+  return queue;     
 }
   
 /* removes the queue from existence */
-void delete_queue(queue_t *queue) {         //meli bycom predavat pointr ne celou fci-omezime chyby
+void delete_queue(queue_t *queue) {         
   free (queue->my_data);
   free(queue);
 }
@@ -46,10 +46,9 @@ bool push_to_queue(queue_t *queue, void *data){ //check
        }
      }
      free(queue->my_data);
-     queue->my_data = my_new_data;//////////////////////////////////////ifyiyl
+     queue->my_data = my_new_data;
      queue->head = 0;
-     queue->tail = queue->counter; //pozor, tail tady ukazuje na volne misto     
-       
+     queue->tail = queue->counter; 
    }
    queue->my_data[queue->tail] = data;
    queue->counter = queue->counter+1;
@@ -77,8 +76,6 @@ void* pop_from_queue(queue_t *queue){//
      }
      
       if(queue->counter < (queue->size)/3){ //fine till here
-     //alokuj nove pole tretinove velikosti
-        //printf("Realokuji v popu a zmensuji\n");
         int** my_new_data = (int**)malloc((queue->size/3)*sizeof(int*));
         if(my_new_data == NULL){///
        free(my_new_data);
@@ -97,7 +94,7 @@ void* pop_from_queue(queue_t *queue){//
         queue->size = queue->size/3;
         queue->my_data = my_new_data;
         queue->head = 0;
-        queue->tail = queue->counter; //POZORRRRR 
+        queue->tail = queue->counter; 
       }
       if(queue->tail > queue->size){
          queue->tail = 0;
